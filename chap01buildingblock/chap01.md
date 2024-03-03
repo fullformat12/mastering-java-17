@@ -65,6 +65,64 @@ Nếu có pakage thì phải khai tên nó ra ngay từ đầu, dòng code đầ
 `bai1` chính là tên package. Nếu file java nằm ở thư mục gốc thì không có package, như vậy là không cần khai báo.     
 Tiếp theo: Nếu muốn sử dụng các class từ package thì phải thêm các lệnh `import` còn không sử dụng thì thôi.      
 Tiếp theo: Là khai báo tên class (bắt buộc, tên phải giống tên file). Trường hợp có nhiều class trong một file thì class nào là public thì phải giống tên file.     
-Tiếp theo: Bên trong class là các thuộc tính và phương thức, thứ tự tuỳ ý, lung tung. Nhưng thường để các thuộc tính ở trên, các phương thức ở dưới cho chuyên nghiệp.    
+Tiếp theo: Bên trong class là các thuộc tính và phương thức, thứ tự tuỳ ý, lung tung. Nhưng thường để các thuộc tính ở trên, các phương thức ở dưới cho chuyên nghiệp.      
+
+### Cách chạy (thực thi) một chương trình Java     
+Chúng ta có 2 cách:     
+#### sử dụng lệnh java     
+> java Hello.java 1 2 3   
+
+Trường hợp này, chúng ta chạy trực tiếp, không có file Hello.class được tạo ta. Giống như chúng ta chạy thông dịch chương trình php hay python    
+#### biên dịch ra bytecodes rồi mới chạy chương trình   
+> javac Hello.java  
+
+`Lệnh này sẽ biên dịch (compile) file Hello.java, tức là từ file Hello.java => tạo ra file Hello.class (trong đó chữa các dòng mã loằng ngoằng gọi là bytecode)`
+
+>java Hello 1 2 3     
+
+`Sau khi biên dịch, chúng ta chạy chương trình bằng lệnh java, lúc này file Hello không cần .java hay .class, và nó sẽ thực thi file Hello.class    `
+
+#### Đóng gói chương trình (packaging)    
+Bắt đầu chuyên nghiệp hơn nè, lúc đầu chúng ta tạo file Hello.java ở đâu, khi biên dịch bằng lệnh javac thì file Hello.class sẽ được tạo ra tại chỗ.    
+Nhưng nếu chúng ta muốn nó gọn gàng hơn, chúng ta cần phải quy hoạch nó, chúng ta tạo ra các thư mục mang ý nghĩa giống với chức năng của nó, và trong đó chỉ đển những file đã biên dịch (file .class) chứ không để lẫn lộn cà file code (.java) nữa.    
+
+Lúc này ta có tuỳ chọn -d (-d option) để chỉ định thư mục chứa file .class
+>javac -d target/classes Hello.java   
+
+`Lúc này file Hello.java sẽ được biên dịch ra file Hello.class và file class sẽ được đưa vào thư mục target/classes   `    
+#### Sử dụng classpath    
+Khi dự án của chúng ta có nhiều class, tức là nhiều file java, và file java chính của chương trình (chứa phương thức main) cần sử dụng tới các class khác.    
+Để làm được điều này chúng ta phải liên kết các file java liên quan với file chính của chương trình bằng cách gắn chúng vào cái gọi là classpath (kiểu như classpath là một cái dây, file java chính nằm ở đầu dây, như một hạt, các class khác sẽ giống như các hạt khác gắn vào dây đó, tạo thành chuỗi hạt, lúc đó chúng có thể kết nối với nhau, có cơ hội truy cập đến nhau)    
+Nếu không có classpath thì file java chính sẽ không biết các file kia ở đâu mà tìm, đó là lý do cần classpath    
+Cách thực hiện:    
+>java -cp target/classes chap01.Hello     
+
+>java -classpath target/classes chap01.Hello    
+
+>java --class-path target/classes chap01.Hello     
+
+Cả 3 cách viết trên là như nhau, chúng ta có thể chọn một trong 3 cách trên, tức là sử dụng tuỳ chọn `-cp` hoặc `-classpath` `--class-path`     
+Cả 3 lệnh trên đều có ý nghĩa là: gắn tất cả các file đã biên dịch trong thư mục target/classes và chuỗi classpath, và thực thi file Hello ở trong thư mục (package) chap01, lúc này đã gắn các class ở thưc mục target/classes vào rồi.   
+#### Sử dụng các biến số (variables)    
+Có 3 loại biến số:
++ Biến cục bộ (local variable), là các biến được định nghĩa trong một block, tức là trong cặp { ... }     
++ Biến của đối tượng (instance variable), là các thuộc tính (attributes, properties) của class, chúng hoạt động khi một đối tượng được tạo ra (là các biến không được định nghĩa với từ khoá static)    
++ Biến của Lớp (class variable), khác với instance variable duy nhất là chúng có chứa từ khoá static khi định nghĩa (vì thế ta có thể sử dụng các biến này mà không cần tạo đối tượng)
+
+##### Chú ý về việc khai báo, khởi tạo và sử dụng biến       
+- Các biến cục bộ cần phải khởi tạo giá trị trước khi sử dụng, nếu không trình biên dịch sẽ ý kiến ý có ngay (nó sẽ complaint)     
+- Các biến của đối tượng thì không cần khởi tạo cũng được, nó sẽ được gán cho một giá trị mặc định.
+##### Đặt tên cho biến (naming for variable)
+
+-Chúng ta có thể sử dụng các chữ cái, ký tự tiền của các nước, dấu _ và số để đặt tên cho biến     
+Ví dụ:    
+>var nam;  
+>var $nam;     
+> var nam123    
+> var nam$_123;   
+> var a; # hợp lệ    
+> var _; # không hợp lệ
+
+`Chú ý: nếu tên biến có chứa số thì nó không được phép đứng ở vị trí đầu tiên, nếu biến số chỉ có một ký tự thì không được phép là dấu _ (gạch dưới).`
 
 
