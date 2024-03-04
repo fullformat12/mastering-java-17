@@ -105,57 +105,98 @@ Cả 3 cách viết trên là như nhau, chúng ta có thể chọn một trong 
 Cả 3 lệnh trên đều có ý nghĩa là: gắn tất cả các file đã biên dịch trong thư mục target/classes và chuỗi classpath, và thực thi file Hello ở trong thư mục (package) chap01, lúc này đã gắn các class ở thưc mục target/classes vào rồi.   
 #### Sử dụng các biến số (variables)    
 Có 3 loại biến số:
-+ <b>Biến cục bộ (local variable)</b>, là các biến được định nghĩa trong một block, tức là trong cặp { ... }     
-+ <b>Biến của đối tượng (instance variable)</b>, là các thuộc tính (attributes, properties) của class, chúng hoạt động khi một đối tượng được tạo ra (là các biến không được định nghĩa với từ khoá static)    
-+ <b>Biến của Lớp (class variable)</b>, khác với instance variable duy nhất là chúng có chứa từ khoá static khi định nghĩa (vì thế ta có thể sử dụng các biến này mà không cần tạo đối tượng)       
++ **Biến cục bộ (local variable)**, là các biến được định nghĩa trong một block, tức là trong cặp { ... }     
++ **Biến của đối tượng (instance variable)**, là các thuộc tính (attributes, properties) của class, chúng hoạt động khi một đối tượng được tạo ra (là các biến không được định nghĩa với từ khoá static)    
++ **Biến của Lớp (class variable)**, khác với instance variable duy nhất là chúng có chứa từ khoá static khi định nghĩa (vì thế ta có thể sử dụng các biến này mà không cần tạo đối tượng)       
 
 ###### Vòng đời của chúng nó:    
-+ <b>Local variable:</b> được sinh ra từ dòng lệnh khởi tạo cho đến khi toàn bộ block được thực thi xong.
-+ <b>Instance variable:</b> được sinh ra từ khi đối tượng được khởi tạo cho đến khi đối tượng được bộ dọn rác giải phóng.
-+ <b>Class variable:</b> thằng này sống dai nhất, nó được sinh ra từ khi chương trình bắt đầu chạy cho đến khi tắt chương trình mới chịu chết. Bọn này giúp truy cập thông tin nhanh hơn, nhưng rất tốn bộ nhớ, nên là thông tin nào thường xuyên (được sử dụng nhiều) thì mới cho nó là static (là class variable) nhé.
++ **Local variable:** được sinh ra từ dòng lệnh khởi tạo cho đến khi toàn bộ block được thực thi xong.
++ **Instance variable:** được sinh ra từ khi đối tượng được khởi tạo cho đến khi đối tượng được bộ dọn rác giải phóng.
++ **Class variable:** thằng này sống dai nhất, nó được sinh ra từ khi chương trình bắt đầu chạy cho đến khi tắt chương trình mới chịu chết. Bọn này giúp truy cập thông tin nhanh hơn, nhưng rất tốn bộ nhớ, nên là thông tin nào thường xuyên (được sử dụng nhiều) thì mới cho nó là static (là class variable) nhé.
 
 ##### Chú ý về việc khai báo, khởi tạo và sử dụng biến       
 - Các biến cục bộ cần phải khởi tạo giá trị trước khi sử dụng, nếu không trình biên dịch sẽ ý kiến ý có ngay (nó sẽ complaint)     
 - Các biến của đối tượng thì không cần khởi tạo cũng được, nó sẽ được gán cho một giá trị mặc định.
 ##### Đặt tên cho biến (naming for variable)
 
--Chúng ta có thể sử dụng các chữ cái, ký tự tiền của các nước, dấu _ và số để đặt tên cho biến     
+Chúng ta có thể sử dụng các chữ cái, ký tự tiền của các nước, dấu _ và số để đặt tên cho biến     
 Ví dụ:    
->var nam;  
->var $nam;     
-> var nam123    
-> var nam$_123;   
-> var a; # hợp lệ    
-> var _; # không hợp lệ
-
+<pre>
+var nam;  
+var $nam;     
+var nam123    
+var nam$_123;   
+var a; // hợp lệ    
+var _; // không hợp lệ
+</pre>
 `Chú ý: nếu tên biến có chứa số thì nó không được phép đứng ở vị trí đầu tiên, nếu biến số chỉ có một ký tự thì không được phép là dấu _ (gạch dưới).`     
 #### var : kiểu dữ liệu mới?     
 Không phải!    
 `var` được dùng để khai báo biến, đặt trước biến giống như int, String,...    
 Nhưng `var` không phải kiểu dữ liệu mới, nó chỉ là một cách khai báo biến tổng quát. Khi sử dụng var để khai báo biến thì trình biên dịch sẽ sử dụng trí thông minh của nó để đoán xem, giá trị khởi tạo của nó là kiểu gì thì gán con `var` là kiểu đó.    
 Ví dụ:   
->var ten = "Nam";     
-Lúc này var là kiểu String
->var tuoi = 12;     
-Lúc này var là kiểu int.     
-
+<pre>
+var ten = "Nam"; // Lúc này var là kiểu String
+var tuoi = 12; // Lúc này var là kiểu int.     
+</pre>
 `Chú ý: khai báo biến theo var chỉ dành cho biến cục bộ (local variable), bạn cố tình dùng cho kiểu biến khác thì compile nó cũng không chịu.    
 Và bởi vì nó cần dữ liệu để compile có thể đoán mò xem var là kiểu gì, nên sử dụng var khai báo biến thì cần khởi tạo, nếu không khởi tạo, thì nó cũng sẽ không chịu, nó complaint ngay lập tức.`       
 Thêm một chút: `var` cũng chẳng phải từ khoá của java như kiểu `static` nên chúng ta có thể dùng từ `var` để đặt tên cho cái gì cũng được.     
 Kể cả là:
->public void var(){
-> 
->       var var = "var";
-> 
->}    
+<pre>
+public void var(){
+    var var = "var";
+}    
+</pre>
 
 Trông rất ngớ ngẩn, nhưng trình biên dịch vẫn cho là ok, được phép sử dụng. Tất nhiên chúng ta thông minh không làm việc ngớ ngẩn như thế.    
 
 Chưa hết sự ngớ ngẩn đâu, tiếp theo là bộ dọn giác Garbage Collection
 ### Garbage Collection (bộ dọn rác)    
 Trong java, bộ dọn rác được dùng để thu dọn, làm sạch các đối tượng tạo ra mà không sử dụng, hoặc các đối tượng đã sử dụng nhưng xong rồi (hết tác dụng). Nó hoạt động một cách tự động, theo chỉ đạo của JVM chứ không tuân thủ yêu cầu của người lập trình.     
-Tức là, java cho phép sử dụng lệnh  System.gc(); để kích hoạt bộ dọn rác, nhưng mà có chắc chắn nó thực hiện không thì chịu. JVM sẽ chỉ đạo nó chứ không phải lập trình viên, tất nhiên có thể một chút tỉ lệ ưu tiên cho người may mắn.    
+Tức là, java cho phép sử dụng lệnh  System.gc(); để kích hoạt bộ dọn rác, nhưng mà có chắc chắn nó thực hiện không thì chịu. JVM sẽ chỉ đạo nó chứ không phải lập trình viên, tất nhiên có thể một chút tỉ lệ ưu tiên cho người may mắn.        
+#### Vấn đề import trùng lặp
+Trong các dự án java, chúng ta vẫn thường thấy có sự import trùng lặp, kiểu như là:
+>import java.util.Arrays;     
+>import java.util.*;
 
+Ở đây có 2 lệnh import, dòng thứ nhất import riêng Arrays của package `java.util`     
+Dòng thứ 2 import tất cả các class có trong package `java.util`, mà tron này lại có chứa class Arrays rồi            
+Như vậy, 2 dòng import trên sẽ có cùng một nhiệm vụ là import class Arrays, lúc này, dòng import chỉ định rõ tên class sẽ được áp dụng, còn dòng thứ 2 sẽ vô tác dụng.       
+Dòng thứ 2 gọi là import bằng cách sử dụng ký tự * đại diện (wildcards). Tất nhiên là nếu chúng ta lập trình bằng các IDE hiện đại, thì nó sẽ báo là dòng thứ 2 ko cần sử dụng vì có dòng 1 rồi.
 
+Thêm một câu hỏi, khi sử dụng wildcards (*) thì tất cả class trong package đó sẽ được import à?     
+Không phải!      
+Cho dù sử dụng wildcards (*) thì cũng chỉ có cũng class được dùng trong chương trình mới được import thôi, trình biên dịch cũng không hề import thừa, chỗ này nó khá thông minh.
+
+### Text block
+Đây là thứ mới mẻ của java 17, nó giúp chúng ta tạo ra một văn bản nhiều dòng mà không cần cộng chuỗi hay sử dụng các ký tự xuống dòng phức tạp.    
+Ví dụ:
+<pre>
+public class TextBlock {
+    public static void main(String[] args) {
+        var text = """
+                Hello
+                  World!""";
+        System.out.println(text);
+    }
+}
+</pre>     
+Quy tắc là:    
+- 3 nháy kép ở dòng đầu, chỉ để khai báo, không có ký tự ở dòng này     
+- Văn bản sẽ bắt đầu từ dòng thứ 2 (Hello), ký tự đầu tiên là đầu dòng, là lề của văn bản    
+- Các dòng sau căn lề theo dòng thứ 2, sau đó khoảng trắng coi đúng nghĩa là khoảng trắng    
+- Dòng cuois cùng có 3 nháy kép để kết thúc văn bản.    
+Kết quả thực thi chương trình trên:    
+<pre>
+Hello
+  World!
+</pre>
+Thêm ví dụ:
+<pre>
+String s = """Hello"""; // không hợp lệ, text block không được chứa giá trị ở dòng đầu tiên (có 3 nháy kép mở văn bản)
+</pre>    
+- Ký tự \ có tác dụng nối dòng trên với dòng dưới      
+- Ký tự \s là đại diện cho một khoảng trắng
 
 
